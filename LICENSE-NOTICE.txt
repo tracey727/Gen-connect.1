@@ -1,0 +1,5 @@
+GENEVIEVE Connection & Relationship System V2.0
+
+This package was generated for the project owner from the supplied system blueprint.
+No ownership or licensing rights are granted by this notice. Replace this file with the
+project owner's chosen licence terms before public distribution.

@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#153b2f">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="GENEVIEVE Connection & Relationship System V2.0 — a private reflection tool for gradual, reciprocal connection.">
+  <title>GENEVIEVE Connection V2.0</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">GENEVIEVE</p>
+      <h1>Connection &amp; Relationship System <span>V2.0</span></h1>
+      <p class="subhead">Invite. Notice. Ask. Match Pace.</p>
+    </div>
+    <button id="quickHideBtn" class="button ghost" type="button">Quick hide</button>
+  </header>
+
+  <nav class="tabs" aria-label="Primary">
+    <button class="tab active" data-view="dashboard" type="button">Dashboard</button>
+    <button class="tab" data-view="connections" type="button">Connections</button>
+    <button class="tab" data-view="guide" type="button">Framework</button>
+    <button class="tab" data-view="privacy" type="button">Privacy</button>
+  </nav>
+
+  <main id="main">
+    <section id="view-dashboard" class="view active" aria-labelledby="dashboardTitle">
+      <div class="hero card">
+        <div>
+          <p class="eyebrow">Private reflection dashboard</p>
+          <h2 id="dashboardTitle">Symmetrical reciprocity &gt; high intensity.</h2>
+          <p>This app helps you notice patterns over time. It does not diagnose people, guarantee safety, or replace your own judgement.</p>
+        </div>
+        <div class="hero-actions">
+          <button id="newConnectionBtn" class="button primary" type="button">Add a connection</button>
+          <button id="exportBtn" class="button secondary" type="button">Export private backup</button>
+        </div>
+      </div>
+
+      <div id="emptyDashboard" class="card empty-state">
+        <h3>No connection selected</h3>
+        <p>Add someone you are getting to know, then log real interactions. The system waits for patterns rather than making snap judgements.</p>
+      </div>
+
+      <div id="dashboardContent" class="hidden">
+        <div class="summary-grid">
+          <article class="card summary-card">
+            <p class="label">Connection</p>
+            <h3 id="summaryName">—</h3>
+            <p id="summaryContext" class="muted">—</p>
+          </article>
+          <article class="card summary-card">
+            <p class="label">Current stage</p>
+            <h3 id="summaryStage">—</h3>
+            <p id="stageAdvice" class="muted">—</p>
+          </article>
+          <article class="card summary-card">
+            <p class="label">Traffic light</p>
+            <div id="trafficBadge" class="traffic-badge neutral">Not enough data</div>
+            <p id="trafficReason" class="muted">Log at least three interactions for a pattern assessment.</p>
+          </article>
+          <article class="card summary-card">
+            <p class="label">Reciprocity</p>
+            <h3 id="reciprocityScore">—</h3>
+            <p id="reciprocityText" class="muted">Pattern begins after three interactions.</p>
+          </article>
+        </div>
+
+        <section id="actionLockCard" class="card alert-card hidden" aria-live="polite">
+          <h3 id="actionLockTitle">Progression paused</h3>
+          <p id="actionLockText"></p>
+        </section>
+
+        <div class="two-column">
+          <section class="card">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">6-stage micro-progression</p>
+                <h3>Move in tiny, reversible steps</h3>
+              </div>
+              <span id="stageNumberPill" class="pill">Stage 1</span>
+            </div>
+            <ol id="stageList" class="stage-list"></ol>
+            <div class="button-row">
+              <button id="stageBackBtn" class="button secondary" type="button">Step back</button>
+              <button id="stageForwardBtn" class="button primary" type="button">Advance one stage</button>
+            </div>
+            <p id="stageLockMessage" class="form-note"></p>
+          </section>
+
+          <section class="card">
+            <p class="eyebrow">Psychological sobriety checks</p>
+            <h3>Two private reality checks</h3>
+            <div class="check-block">
+              <label for="isolationCheck">Am I choosing this specific person for who they are, rather than mainly choosing not to be alone?</label>
+              <select id="isolationCheck">
+                <option value="">Not answered</option>
+                <option value="yes">Yes</option>
+                <option value="unsure">Unsure</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+            <div class="check-block">
+              <label for="foundationCheck">If romance never happened, would I still want this person in my life as a friend?</label>
+              <select id="foundationCheck">
+                <option value="">Not answered</option>
+                <option value="yes">Yes</option>
+                <option value="unsure">Unsure</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+            <p class="form-note">These answers stay on this device and are never used as public matching labels.</p>
+          </section>
+        </div>
+
+        <section class="card">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Interaction log</p>
+              <h3>Record what actually happened</h3>
+            </div>
+            <button id="logInteractionBtn" class="button primary" type="button">Log interaction</button>
+          </div>
+          <div id="interactionStats" class="mini-stats"></div>
+          <div id="interactionList" class="interaction-list"></div>
+        </section>
+
+        <section class="card">
+          <p class="eyebrow">Private activity budget</p>
+          <h3>Connection ideas without exposing income</h3>
+          <p class="muted">Choose what you can comfortably spend. This is stored privately and is never a public label.</p>
+          <div class="budget-row">
+            <label for="budgetSelect">Comfortable activity budget</label>
+            <select id="budgetSelect">
+              <option value="0">$0</option>
+              <option value="10">Up to $10</option>
+              <option value="25">Up to $25</option>
+              <option value="50">Up to $50</option>
+            </select>
+          </div>
+          <div id="activityIdeas" class="idea-grid"></div>
+        </section>
+      </div>
+    </section>
+
+    <section id="view-connections" class="view" aria-labelledby="connectionsTitle">
+      <div class="section-heading page-heading">
+        <div>
+          <p class="eyebrow">Private connection records</p>
+          <h2 id="connectionsTitle">Connections</h2>
+        </div>
+        <button id="newConnectionBtn2" class="button primary" type="button">Add connection</button>
+      </div>
+      <div id="connectionsList" class="connection-grid"></div>
+    </section>
+
+    <section id="view-guide" class="view" aria-labelledby="guideTitle">
+      <div class="page-heading">
+        <p class="eyebrow">Framework</p>
+        <h2 id="guideTitle">The operating rules</h2>
+      </div>
+
+      <div class="guide-grid">
+        <article class="card">
+          <h3>The Mutual Step Principle</h3>
+          <p class="large-rule">Invite → Notice → Ask → Match Pace</p>
+          <p>Progress is based on reciprocal behaviour over time, not chemistry, urgency, obsession, or text intensity.</p>
+        </article>
+
+        <article class="card">
+          <h3>Pattern Reciprocity Vector</h3>
+          <ul class="clean-list">
+            <li>Intentional choice</li>
+            <li>Frictionless depth</li>
+            <li>Symmetrical effort</li>
+            <li>Active memory</li>
+            <li>Mutual curiosity</li>
+            <li>Organic safety</li>
+            <li>Autonomy preservation</li>
+          </ul>
+        </article>
+
+        <article class="card traffic-card green-card">
+          <h3>Green — proceed naturally</h3>
+          <p>Consistent communication, equal initiation, emotional safety, and respect for a “no” or boundary.</p>
+        </article>
+
+        <article class="card traffic-card yellow-card">
+          <h3>Yellow — pause and observe</h3>
+          <p>If you are carrying most of the contact/logistics, signals are mixed, or intensity is racing ahead of substance, stop accelerating and observe.</p>
+        </article>
+
+        <article class="card traffic-card red-card">
+          <h3>Red — freeze progression</h3>
+          <p>Pressure after “no,” possessiveness, isolation attempts, humiliation, monitoring, constant anger, sexual or financial pressure, or punishment for boundaries freezes progression.</p>
+        </article>
+
+        <article class="card">
+          <h3>Non-linear off-ramp</h3>
+          <p>Either person can slow down or step back. A slowdown is calibration, not proof of rejection. A red safety indicator is different: attraction or loneliness never overrides it.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="view-privacy" class="view" aria-labelledby="privacyTitle">
+      <div class="page-heading">
+        <p class="eyebrow">Privacy &amp; control</p>
+        <h2 id="privacyTitle">Your data stays in your browser</h2>
+      </div>
+      <div class="card prose">
+        <p>This build has no account system, no analytics, no advertising, no matching database, and no server-side relationship record. Your entries are stored in this browser using local storage.</p>
+        <p><strong>Important:</strong> browser storage is not the same as encrypted storage. Anyone who can open this browser profile on an unlocked device may be able to view the app. Use your device lock and do not enter information you would be unsafe storing on the device.</p>
+        <p>The app never publishes loneliness, living situation, abuse history, income, budget, or isolation information. It does not show “people alone near you” and it does not use private vulnerability data for matching.</p>
+        <div class="button-row">
+          <label class="button secondary file-button">
+            Import backup
+            <input id="importInput" type="file" accept="application/json">
+          </label>
+          <button id="clearDataBtn" class="button danger" type="button">Delete all app data</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="connectionDialog">
+    <form id="connectionForm" method="dialog">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">Private record</p>
+          <h2>Add a connection</h2>
+        </div>
+        <button class="icon-button" value="cancel" aria-label="Close" type="submit" formnovalidate>×</button>
+      </div>
+
+      <label for="connectionName">Name or private nickname</label>
+      <input id="connectionName" maxlength="80" required autocomplete="off">
+
+      <label for="connectionContext">Where do you naturally cross paths?</label>
+      <input id="connectionContext" maxlength="120" placeholder="Dog park, community group, work, class…" autocomplete="off">
+
+      <label for="connectionNote">Optional private note</label>
+      <textarea id="connectionNote" maxlength="500" rows="3" placeholder="Keep this factual and brief."></textarea>
+
+      <div class="dialog-actions">
+        <button class="button secondary" value="cancel" type="submit" formnovalidate>Cancel</button>
+        <button id="saveConnectionBtn" class="button primary" value="default" type="submit">Save connection</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="interactionDialog">
+    <form id="interactionForm" method="dialog">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">Pattern evidence</p>
+          <h2>Log an interaction</h2>
+        </div>
+        <button class="icon-button" value="cancel" aria-label="Close" type="submit" formnovalidate>×</button>
+      </div>
+
+      <div class="form-grid">
+        <div>
+          <label for="interactionDate">Date</label>
+          <input id="interactionDate" type="date" required>
+        </div>
+        <div>
+          <label for="initiator">Who initiated?</label>
+          <select id="initiator" required>
+            <option value="me">Mostly me</option>
+            <option value="them">Mostly them</option>
+            <option value="shared">Shared / natural</option>
+          </select>
+        </div>
+        <div>
+          <label for="logistics">Who carried the planning/logistics?</label>
+          <select id="logistics" required>
+            <option value="me">Mostly me</option>
+            <option value="them">Mostly them</option>
+            <option value="shared">Shared / simple</option>
+          </select>
+        </div>
+        <div>
+          <label for="feltSafety">How did the interaction feel?</label>
+          <select id="feltSafety" required>
+            <option value="calm">Calm / respected</option>
+            <option value="uncertain">Uncertain / activated</option>
+            <option value="unsafe">Unsafe / pressured</option>
+          </select>
+        </div>
+      </div>
+
+      <fieldset>
+        <legend>Reciprocity signs you actually observed</legend>
+        <div class="check-grid">
+          <label><input type="checkbox" name="positive" value="depth"> Conversation had natural depth</label>
+          <label><input type="checkbox" name="positive" value="memory"> They remembered something that mattered</label>
+          <label><input type="checkbox" name="positive" value="curiosity"> Mutual curiosity was present</label>
+          <label><input type="checkbox" name="positive" value="silence"> Silence felt comfortable</label>
+          <label><input type="checkbox" name="positive" value="boundary"> A boundary or “no” was respected</label>
+          <label><input type="checkbox" name="positive" value="autonomy"> Separate routines/identity felt respected</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Yellow indicators</legend>
+        <div class="check-grid">
+          <label><input type="checkbox" name="yellow" value="fastIntensity"> Very high intensity very quickly</label>
+          <label><input type="checkbox" name="yellow" value="mixedSignals"> Mixed signals / hot and cold</label>
+          <label><input type="checkbox" name="yellow" value="guessing"> I felt I had to keep guessing where I stood</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="danger-fieldset">
+        <legend>Red indicators</legend>
+        <div class="check-grid">
+          <label><input type="checkbox" name="red" value="pressureAfterNo"> Pressure after I said no</label>
+          <label><input type="checkbox" name="red" value="possessive"> Possessiveness or jealousy</label>
+          <label><input type="checkbox" name="red" value="isolation"> Attempt to isolate me from others</label>
+          <label><input type="checkbox" name="red" value="humiliation"> Humiliation or degrading behaviour</label>
+          <label><input type="checkbox" name="red" value="monitoring"> Monitoring my movements / intrusive control</label>
+          <label><input type="checkbox" name="red" value="anger"> Repeated or intimidating anger</label>
+          <label><input type="checkbox" name="red" value="sexualPressure"> Sexual pressure</label>
+          <label><input type="checkbox" name="red" value="financialPressure"> Financial pressure</label>
+          <label><input type="checkbox" name="red" value="boundaryPunishment"> Silence, guilt, or punishment for a boundary</label>
+        </div>
+      </fieldset>
+
+      <label for="interactionNote">Optional factual note</label>
+      <textarea id="interactionNote" maxlength="800" rows="4" placeholder="What happened? Avoid mind-reading; record observable behaviour."></textarea>
+
+      <div class="dialog-actions">
+        <button class="button secondary" value="cancel" type="submit" formnovalidate>Cancel</button>
+        <button id="saveInteractionBtn" class="button primary" value="default" type="submit">Save interaction</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="hiddenScreen" class="hidden-screen hidden" role="dialog" aria-modal="true" aria-label="Screen hidden">
+    <div class="hidden-card">
+      <h2>Screen hidden</h2>
+      <p>Your app is still open, but relationship content is concealed.</p>
+      <button id="restoreScreenBtn" class="button primary" type="button">Restore</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <footer>
+    <p>GENEVIEVE Connection &amp; Relationship System V2.0 · Private reflection tool · Not clinical diagnosis or a safety guarantee.</p>
+  </footer>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>

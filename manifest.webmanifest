@@ -1,0 +1,10 @@
+{
+  "name": "GENEVIEVE Connection & Relationship System V2.0",
+  "short_name": "GENEVIEVE Connection",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f6f3",
+  "theme_color": "#153b2f",
+  "description": "Private, local-first reflection tool for gradual, reciprocal friendship and romantic progression."
+}
