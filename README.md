@@ -1,6 +1,10 @@
 # GENEVIEVE Connection & Relationship System V2.0
 
-A deployable, local-first web app implementing the supplied GENEVIEVE Connection & Relationship System V2.0.
+**Canonical repository for the Connection & Relationship System.**
+
+Repository family:
+- `Gen-connect.1` — canonical; contains the complete core app plus the additional image/icon assets
+- `Gen-connect-` — earlier subset/reference only
 
 ## What this build does
 
@@ -10,81 +14,25 @@ A deployable, local-first web app implementing the supplied GENEVIEVE Connection
 - Calculates a private reciprocity score after at least three interactions.
 - Implements Green / Yellow / Red traffic-light guardrails.
 - Locks forward progression when a Yellow or Red guardrail is active.
-- Implements the rule that three consecutive interactions with 100% user initiation or logistics pauses progression.
-- Records the two psychological sobriety checks privately.
-- Keeps budget information private and only uses it to filter activity ideas on-device.
-- Never exposes loneliness, abuse history, isolation, living situation, income or budget as a public label.
-- Provides a Quick Hide screen.
-- Exports/imports a JSON backup.
-- Works offline after the first successful load through a service worker.
-- Uses no account system, no analytics and no third-party libraries.
+- Records the psychological sobriety checks privately.
+- Keeps budget information private and uses it only on-device.
+- Provides Quick Hide, JSON backup/restore and offline support.
+- Uses no account system, analytics or third-party libraries.
 
-## Important privacy limitation
+## Privacy boundary
 
-This version stores data in the browser's `localStorage`.
+This version stores data in browser `localStorage`. Data is not uploaded to a GENEVIEVE server, there is no multi-device sync, clearing site data can erase entries, and anyone with access to the same unlocked browser profile may be able to see them. Use the built-in export function for private backups.
 
-That means:
-- nothing is uploaded to a GENEVIEVE server;
-- there is no multi-device sync;
-- clearing browser/site data can erase entries;
-- anyone who can open the same unlocked browser profile may be able to see the entries.
+## Deploy
 
-Use the built-in export function to keep a private backup. Store backups securely.
+This is a static application. ON TRACK by TRACE deployment standard for this build is GitHub + Cloudflare Pages.
 
-## Deploy to GitHub
-
-1. Create a new GitHub repository.
-2. Upload all files from this folder to the repository root.
-3. Commit the files.
-
-The repository root should contain:
-
-```text
-index.html
-styles.css
-app.js
-service-worker.js
-manifest.webmanifest
-vercel.json
-README.md
-```
-
-## Deploy to Vercel
-
-1. Sign in to Vercel.
-2. Choose **Add New → Project**.
-3. Import the GitHub repository.
-4. Leave Framework Preset as **Other** if Vercel does not detect a framework.
-5. There is no build command and no environment variable required.
-6. Deploy.
-
-This is a static web app, so Vercel serves the files directly.
+Connect this repository to Cloudflare Pages and publish the repository root. No build command, database or environment variables are required for the current local-first version.
 
 ## Safety design
 
-The app is a reflection tool, not a clinical diagnosis, lie detector, compatibility test, or safety guarantee.
-
-- Green means the logged pattern currently contains reciprocal and calm indicators.
-- Yellow means pause and observe.
-- Red freezes progression.
-- Attraction, loneliness, apology and intensity do not override a Red indicator.
-- The app never tells the user a person is definitively “safe.”
-- A step backwards is always allowed.
+The app is a reflection tool, not a clinical diagnosis, lie detector, compatibility test or safety guarantee. Green, Yellow and Red are behavioural guardrails only; a step backwards is always allowed.
 
 ## Future production upgrade
 
-If this becomes a multi-user product, do not simply put these private fields into a shared database. A production architecture should add, at minimum:
-
-- authenticated private accounts;
-- field-level privacy classification;
-- encryption in transit and at rest;
-- carefully separated public vs private data models;
-- explicit consent controls;
-- rate limiting and abuse prevention;
-- audit logs for sensitive operations;
-- data deletion/export controls;
-- threat modelling for stalking, coercive control and account takeover;
-- independent security/privacy review;
-- clear rules preventing vulnerability-based discovery or matching.
-
-The current local-first build deliberately avoids those server-side risks.
+A multi-user version would require authenticated accounts, privacy classification, encryption, explicit consent, abuse controls, audit logging, deletion/export controls, threat modelling and independent privacy/security review before sensitive shared data is introduced.
